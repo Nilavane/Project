@@ -2,39 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>My Reveal.js Presentation</title>
+  <title>Socrates: A Journey Through Philosophy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Reveal.js CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/dist/theme/black.css">
+  <link rel="stylesheet" href="reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="reveal.js/dist/theme/black.css" id="theme">
 
-  <!-- Reveal.js JS -->
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js/dist/reveal.js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- Reveal.js Plugins -->
+  <link rel="stylesheet" href="reveal.js/plugin/highlight/monokai.css">
 </head>
 <body>
+
   <div class="reveal">
     <div class="slides">
-      <section data-transition="fade">
-        <h2>Welcome to Reveal.js</h2>
-        <p>This is my first slide.</p>
-      </section>
-
-      <section data-transition="zoom">
-        <h3>Animated Bullets</h3>
-        <ul>
-          <li class="fragment fade-in">Point one</li>
-          <li class="fragment grow">Point two</li>
-          <li class="fragment fade-up">Point three</li>
-        </ul>
-      </section>
+      <!-- Slides will be inserted here -->
     </div>
   </div>
+
+  <!-- Reveal.js Core -->
+  <script src="reveal.js/dist/reveal.js"></script>
+
+  <!-- Reveal.js Plugins -->
+  <script src="reveal.js/plugin/markdown/markdown.js"></script>
+  <script src="reveal.js/plugin/highlight/highlight.js"></script>
+  <script src="reveal.js/plugin/notes/notes.js"></script>
+  <script src="reveal.js/plugin/math/math.js"></script>
+
+  <!-- Custom JS -->
+  <script src="js/custom.js"></script>
 
   <script>
     Reveal.initialize({
       hash: true,
-      plugins: []
+      slideNumber: true,
+      plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ],
+      autoAnimate: true
     });
   </script>
 </body>
