@@ -14,7 +14,43 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
 </head>
 <body>
+<!-- YouTube background container -->
+<div id="bg-video"></div>
 
+<!-- CSS for fullscreen background -->
+<style>
+  #bg-video {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+  }
+</style>
+
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  function onYouTubeIframeAPIReady() {
+    new YT.Player('bg-video', {
+      videoId: 'fHI8X4OXluQ', // Blinding Lights
+      playerVars: {
+        autoplay: 1,
+        controls: 0,
+        mute: 1,
+        loop: 1,
+        playlist: 'fHI8X4OXluQ',
+        modestbranding: 1,
+        rel: 0,
+        showinfo: 0
+      },
+      events: {
+        onReady: e => e.target.playVideo()
+      }
+    });
+  }
+</script>
 <div class="reveal">
   <div class="slides">
     <section>
