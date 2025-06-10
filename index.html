@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+
+        <title>Reveal.js with p5.js Sketch</title>
+
+        <!-- Essential Reveal.js CSS -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css"
+        />
+        <!-- Choose a theme -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css"
+            id="theme"
+        />
+
+        <!-- Optional: Custom styles for your presentation -->
+        <style>
+            .reveal h1,
+            .reveal h2,
+            .reveal p {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Make text more visible over backgrounds */
+                color: #e2e8f0; /* Ensure text color contrasts with potentially dark backgrounds */
+                position: relative; /* Ensure text is above iframe background */
+                z-index: 1; /* Keep text above the iframe background */
+            }
+            /* Style for the morphing SVG container */
+            #svg-morph-container {
+                width: 300px;
+                height: 300px;
+                margin: 50px auto; /* Center the SVG */
+            }
+            #morphButton {
+                padding: 10px 20px;
+                font-size: 1.2em;
+                cursor: pointer;
+                background-color: #4caf50; /* Green */
+                color: white;
+                border: none;
+                border-radius: 8px;
+                transition: background-color 0.3s ease;
+                margin-top: 20px;
+                position: relative; /* Ensure button is above iframe background */
+                z-index: 1;
+            }
+            #morphButton:hover {
+                background-color: #45a049;
+            }
+
+            /* Styles for embedded content */
+            .iframe-container {
+                width: 100%;
+                height: 60vh; /* Adjust height as needed */
+                border: 2px solid #4299e1; /* Blue border */
+                border-radius: 8px;
+                overflow: hidden; /* Hide scrollbars if content is within frame */
+            }
+            .iframe-container iframe {
+                width: 100%;
+                height: 100%;
+                border: none; /* Remove default iframe border */
+                border-radius: 6px; /* Match container border-radius slightly */
+            }
+
+            /* Styles for p5.js canvas */
+            #p5js-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 80%; /* Adjust container width for the canvas */
+                height: 60vh; /* Adjust container height for the canvas */
+                margin: 20px auto;
+                border: 2px solid #ed8936; /* Orange border for p5.js section */
+                border-radius: 8px;
+                overflow: hidden;
+                background-color: #2d3748; /* Darker background for canvas */
+            }
+            #p5js-canvas {
+                display: block; /* Remove extra space below canvas */
+            }
+
+            /* Adjustments for content on top of iframe backgrounds */
+            .reveal .slides section[data-background-iframe] {
+                /* This ensures content on these slides is layered correctly above the iframe */
+                background-color: rgba(
+                    0,
+                    0,
+                    0,
+                    0.3
+                ); /* Slightly darken background for text readability */
+            }
+        </style>
+
+        <!-- Include Snap.svg library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.5.1/snap.svg-min.js"></script>
+        <!-- Include p5.js library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <!-- Slide 1: Main Title Slide -->
+                <section>
+                    <h1>My First Reveal.js Presentation</h1>
+                    <p>Now with p5.js!</p>
+                    <aside class="notes">
+                        These are speaker notes for the first slide.
+                    </aside>
+                </section>
+
+                <!-- Slide 2: Introduction to a Topic -->
+                <section>
+                    <h2>What is Reveal.js?</h2>
+                    <p>A modern HTML presentation framework.</p>
+                    <ul>
+                        <li>Create presentations using web technologies.</li>
+                        <li>
+                            Supports Markdown, nested slides, code highlighting.
+                        </li>
+                        <li>Easy to customize and extend.</li>
+                    </ul>
+                </section>
+
+                <!-- Slide 3: SVG Morph Animation Slide -->
+                <section>
+                    <h2>SVG Path Morphing</h2>
+                    <p>Click the button to see the shape transform!</p>
+
+                    <!-- SVG Container -->
+                    <div id="svg-morph-container">
+                        <svg
+                            id="morphSvg"
+                            width="100%"
+                            height="100%"
+                            viewBox="0 0 100 100"
+                        >
+                            <!-- Initial path (a circle-like shape) -->
+                            <path
+                                id="morphShape"
+                                fill="#f00"
+                                d="M 50 10 C 70 10, 90 30, 90 50 C 90 70, 70 90, 50 90 C 30 90, 10 70, 10 50 C 10 30, 30 10, 50 10 Z"
+                            ></path>
+                        </svg>
+                    </div>
+
+                    <button id="morphButton">Morph Shape</button>
+
+                    <aside class="notes">
+                        This slide demonstrates SVG path morphing using
+                        Snap.svg. The path attribute 'd' is animated to
+                        transition between two shapes.
+                    </aside>
+                </section>
+
+                <!-- Slide 4: Full-Screen Website Background -->
+                <section
+                    data-background-iframe="https://wikipedia.org"
+                    data-background-interactive="true"
+                    data-preload
+                >
+                    <h2>Full-Screen Website Background</h2>
+                    <p>
+                        You can interact with the website directly on this
+                        slide.
+                    </p>
+                    <p class="text-sm text-gray-400 mt-2">
+                        (Try clicking links or scrolling the embedded page)
+                    </p>
+                    <aside class="notes">
+                        This slide demonstrates embedding an external website.
+                    </aside>
+                </section>
+
+                <!-- Slide 5: Full-Screen PDF Background -->
+                <section
+                    data-background-iframe=""
+                    data-background-interactive="true"
+                    data-preload
+                    data-background-opacity="0.8"
+                >
+                    <h2>Full-Screen PDF Document Background</h2>
+                    <p>You can scroll and interact with the PDF viewer here.</p>
+                    <p class="text-sm text-gray-400 mt-2">
+                        (Use your mouse wheel to scroll the PDF, browser
+                        controls will appear on hover)
+                    </p>
+                    <aside class="notes">
+                        This slide embeds a PDF as a full-screen background.
+                    </aside>
+                </section>
+
+                <!-- New Slide 6: p5.js Sketch -->
+                <section data-state="p5js-sketch">
+                    <h2>Interactive p5.js Sketch</h2>
+                    <p>
+                        A simple rotating rectangle. It stops when you leave
+                        this slide!
+                    </p>
+                    <div id="p5js-container">
+                        <!-- The p5.js canvas will be created here -->
+                    </div>
+                    <aside class="notes">
+                        This slide hosts a p5.js sketch. The sketch is
+                        initialized when the slide is entered and removed when
+                        exited, using Reveal.js events.
+                    </aside>
+                </section>
+
+                <!-- Original Slide (now Slide 7): Nested Slide Example (Vertical progression) -->
+                <section>
+                    <section>
+                        <h2>Nested Slides</h2>
+                        <p>Go down to see more details!</p>
+                    </section>
+                    <section>
+                        <h3>Sub-topic A</h3>
+                        <p>This is a detail slide for a sub-topic.</p>
+                        <pre><code data-trim data-noescape>
+                        // Example JavaScript code
+                        function helloWorld() {
+                            console.log("Hello, Reveal.js!");
+                        }
+                        helloWorld();
+                    </code></pre>
+                    </section>
+                    <section>
+                        <h3>Sub-topic B</h3>
+                        <p>Another detail, just scroll down!</p>
+                        <img
+                            data-src="https://placehold.co/400x250/000000/FFFFFF?text=Image+Placeholder"
+                            alt="Placeholder image"
+                        />
+                    </section>
+                </section>
+
+                <!-- Original Slide (now Slide 8): A Concluding Slide -->
+                <section>
+                    <h2>Thank You!</h2>
+                    <p>Questions?</p>
+                    <p>
+                        <small
+                            >Press 'F' for Fullscreen, 'S' for Speaker
+                            Notes</small
+                        >
+                    </p>
+                </section>
+            </div>
+        </div>
+
+        <!-- Essential Reveal.js JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+
+        <script>
+            // Initialize Reveal.js
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                hash: true,
+                center: true,
+                transition: "slide", // none/fade/slide/convex/concave/zoom
+
+                // Plugins used in this presentation
+                plugins: [RevealNotes, RevealMarkdown, RevealHighlight],
+            });
+
+            // --- SVG Morphing Logic ---
+            // Define the two paths for morphing
+            const path1 =
+                "M 50 10 C 70 10, 90 30, 90 50 C 90 70, 70 90, 50 90 C 30 90, 10 70, 10 50 C 10 30, 30 10, 50 10 Z";
+            const path2 =
+                "M 50 10 L 60 40 L 90 40 L 65 60 L 75 90 L 50 70 L 25 90 L 35 60 L 10 40 L 40 40 Z";
+            let currentPath = path1;
+            let morphing = false;
+
+            document
+                .getElementById("morphButton")
+                .addEventListener("click", function () {
+                    if (morphing) return;
+                    morphing = true;
+                    const s = Snap("#morphSvg");
+                    const shape = s.select("#morphShape");
+                    const targetPath = currentPath === path1 ? path2 : path1;
+                    shape.animate(
+                        { d: targetPath },
+                        1000,
+                        mina.easeinout,
+                        function () {
+                            currentPath = targetPath;
+                            morphing = false;
+                        },
+                    );
+                });
+
+            // --- p5.js Sketch Logic ---
+            let p5Sketch = null; // Variable to hold the p5.js instance
+
+            // Define the p5.js sketch as an object (instance mode)
+            const sketch = (p) => {
+                let angle = 0;
+
+                p.setup = () => {
+                    const container = document.getElementById("p5js-container");
+                    // Create canvas to fit inside the container
+                    p.createCanvas(
+                        container.offsetWidth,
+                        container.offsetHeight,
+                    ).parent("p5js-container");
+                    p.rectMode(p.CENTER); // Draw rectangles from their center
+                    p.noStroke(); // No stroke for the shape
+                    p.fill(255, 100, 100); // Reddish color
+                };
+
+                p.draw = () => {
+                    p.background(45, 55, 72); // Dark background for canvas
+                    p.translate(p.width / 2, p.height / 2); // Move origin to center
+                    p.rotate(angle); // Rotate the canvas
+                    p.rect(0, 0, 150, 100); // Draw a rectangle
+                    angle += 0.02; // Increment angle for rotation
+                };
+
+                p.windowResized = () => {
+                    const container = document.getElementById("p5js-container");
+                    p.resizeCanvas(
+                        container.offsetWidth,
+                        container.offsetHeight,
+                    );
+                };
+            };
+
+            // Reveal.js event listener to manage p5.js sketch lifecycle
+            Reveal.on("slidechanged", (event) => {
+                // Check if the current slide has the 'p5js-sketch' data-state
+                if (event.currentSlide.dataset.state === "p5js-sketch") {
+                    // If entering the p5.js slide AND sketch is not already running
+                    if (p5Sketch === null) {
+                        p5Sketch = new p5(sketch); // Create a new p5.js instance
+                        console.log("p5.js sketch started.");
+                    }
+                } else {
+                    // If exiting the p5.js slide AND sketch is running
+                    if (p5Sketch !== null) {
+                        p5Sketch.remove(); // Remove the p5.js canvas and stop the loop
+                        p5Sketch = null; // Reset the instance variable
+                        console.log("p5.js sketch stopped and removed.");
+                    }
+                }
+            });
+
+            // Optional: Start p5.js if the presentation starts on the p5.js slide
+            // This handles cases where you might refresh directly on the p5.js slide.
+            Reveal.on("ready", (event) => {
+                if (event.currentSlide.dataset.state === "p5js-sketch") {
+                    if (p5Sketch === null) {
+                        p5Sketch = new p5(sketch);
+                        console.log("p5.js sketch started on ready.");
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
